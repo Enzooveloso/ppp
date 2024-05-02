@@ -1,0 +1,11 @@
+com\mycompany\systemcinema\Carrinho.class
+com\mycompany\systemcinema\SystemCinema.class
+com\mycompany\systemcinema\Filme.class
+com\mycompany\systemcinema\RepositoryFilmes.class
+com\mycompany\systemcinema\GestaoDeFilmes.class
+com\mycompany\systemcinema\Sessao.class
+com\mycompany\systemcinema\Pessoa.class
+com\mycompany\systemcinema\Produto.class
+com\mycompany\systemcinema\Estoque.class
+com\mycompany\systemcinema\LocalData.class
+com\mycompany\systemcinema\Salas.class
