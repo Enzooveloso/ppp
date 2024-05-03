@@ -30,7 +30,7 @@ public class Sessao {
     private List<Filme> filmes = new ArrayList<>();
 
     private List<LocalDate> horario;
-    
+
     private Scanner scanner;
 
     public Salas[] getSala() {
@@ -52,11 +52,24 @@ public class Sessao {
     public void setHorario(List<LocalDate> horario) {
         this.horario = horario;
     }
-    
-     public Sessao() {
+
+    public Sessao() {
         this.scanner = new Scanner(System.in);  // Inicializa o scanner uma vez
     }
 
+    /*
+    public void inicializarSalas() {
+    for (int i = 0; i < salas.length; i++) {
+        // Suponha que temos um construtor adequado em Salas
+        salas[i] = new Salas(i + 1, new Filme("Exemplo Filme", "Ação", Duration.ofHours(2)));
+    }
+    }
+     */
+    public void inicializarSalas() {
+        for (int i = 0; i < salas.length; i++) {
+            salas[i] = new Salas(i + 1, new Filme("x", "y", Duration.ofMinutes(5)));
+        }
+    }
 
     /**
      * Permite ao usuário selecionar um filme de uma lista de filmes
@@ -69,23 +82,23 @@ public class Sessao {
      * for encontrado.
      */
     public Filme selecionarFilme(GestaoDeFilmes gestao) {
-        
-            System.out.println("Filmes disponíveis:");
-            for (Filme filme : gestao.getFilmes()) {
-                System.out.println(filme.getTitulo());
-            }
-            System.out.println("Informe o filme que deseja assistir:");
-            String filmeNome = scanner.nextLine();
 
-            for (Filme filme : gestao.getFilmes()) {
-                if (filme.getTitulo().equalsIgnoreCase(filmeNome)) {
-                    System.out.println("Você selecionou: " + filme.getTitulo());
-                    return filme; // Retorna o filme selecionado
-                }
-            }
+        System.out.println("Filmes disponíveis:");
+        for (Filme filme : gestao.getFilmes()) {
+            System.out.println(filme.getTitulo());
+        }
+        System.out.println("Informe o filme que deseja assistir:");
+        String filmeNome = scanner.nextLine();
 
-            System.out.println("Filme não encontrado.");
-        
+        for (Filme filme : gestao.getFilmes()) {
+            if (filme.getTitulo().equalsIgnoreCase(filmeNome)) {
+                System.out.println("Você selecionou: " + filme.getTitulo());
+                return filme; // Retorna o filme selecionado
+            }
+        }
+
+        System.out.println("Filme não encontrado.");
+
         return null; // Retorna null se nenhum filme for encontrado
     }
 
@@ -97,13 +110,12 @@ public class Sessao {
      * @return A quantidade de ingressos escolhida pelo usuário como um inteiro.
      */
     public int selecionarQuantIngressos() {
-        
-            System.out.println("Informe quantos ingressos deseja comprar:");
-            
-            int ingressos = Integer.parseInt(scanner.nextLine());
-            System.out.println("Você selecionou " + ingressos + " ingressos.");
-            return ingressos; // Retorna a quantidade de ingressos
-        
+
+        System.out.println("Informe quantos ingressos deseja comprar:");
+
+        int ingressos = Integer.parseInt(scanner.nextLine());
+        System.out.println("Você selecionou " + ingressos + " ingressos.");
+        return ingressos; // Retorna a quantidade de ingressos
 
     }
 
@@ -113,29 +125,32 @@ public class Sessao {
      * ingresso comprado. Ele mostra os assentos disponíveis e permite ao
      * usuário escolher assentos por suas posições de fila e coluna.
      *
-     * @param numeroIngressos O número de ingressos para os quais os assentos
+     * @param numeroDeIngressos O número de ingressos para os quais os assentos
      * precisam ser selecionados.
      * @param numeroSala O índice da sala de cinema na qual o filme está sendo
      * exibido.
      */
-    public void selecionarPoltronas(int numeroIngressos, int numeroSala) {
-        Salas sala = salas[numeroSala];
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Assentos disponíveis:");
-        sala.mostrarAssentos();
-
-        for (int i = 0; i < numeroIngressos; i++) {
-            System.out.println("Selecione a fila e a coluna para o ingresso " + (i + 1) + ":");
-            int fila = scanner.nextInt();
-            int coluna = scanner.nextInt();
-
-            if (sala.reservarAssento(fila, coluna)) {
-                System.out.println("Assento (" + fila + ", " + coluna + ") reservado com sucesso.");
-            } else {
-                System.out.println("Assento já está ocupado, escolha outro.");
-                i--; // Permite que o usuário tente novamente
+    public void selecionarPoltronas(int numeroDeIngressos, int numeroSala) {
+        if (numeroSala >= 0 && numeroSala < salas.length && salas[numeroSala] != null) {
+            Salas sala = salas[numeroSala];
+            System.out.println("Assentos disponíveis:");
+            sala.mostrarAssentos();
+            for (int i = 0; i < numeroDeIngressos; i++) {
+                System.out.println("Escolha a fila para o ingresso " + (i + 1) + ":");
+                int fila = scanner.nextInt(); // Pega a fila do usuário
+                System.out.println("Escolha a coluna para o ingresso " + (i + 1) + ":");
+                int coluna = scanner.nextInt(); // Pega a coluna do usuário
+                
+                if (sala.reservarAssento(fila, coluna)) {
+                    System.out.println("Assento (" + fila + ", " + coluna + ") reservado com sucesso.");
+                } else {
+                    System.out.println("Assento já está ocupado, escolha outro.");
+                    i--; // Permite que o usuário tente novamente
+                }
             }
+        } else {
+            System.out.println("Número da sala inválido ou sala não inicializada.");
         }
-        scanner.close();
     }
+
 }

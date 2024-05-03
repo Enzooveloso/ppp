@@ -4,6 +4,7 @@
  */
 package com.mycompany.systemcinema;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,22 +17,24 @@ import java.util.Scanner;
  * @author enzov
  * @version 1.0
  */
-public class Carrinho 
-{
+public class Carrinho {
+
     /**
      * Lista de produtos.
      */
-    private List<Estoque> produto;
+    private List<Produto> produto;
+    private Estoque estoque;
+    private Scanner scanner;
     /**
      * Lista de sessoes.
      */
     private List<Sessao> sessao;
 
-    public List<Estoque> getProduto() {
+    public List<Produto> getProduto() {
         return produto;
     }
 
-    public void setProduto(List<Estoque> produto) {
+    public void setProduto(List<Produto> produto) {
         this.produto = produto;
     }
 
@@ -42,33 +45,50 @@ public class Carrinho
     public void setSessao(List<Sessao> sessao) {
         this.sessao = sessao;
     }
-    
+
+    public Carrinho() {
+        this.scanner = new Scanner(System.in);  // Inicializa o scanner uma vez
+    }
+    public Carrinho(Estoque estoque) {
+        this.estoque = estoque;
+        this.produto = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
+    }
+
     /**
      * Constrói um novo usuário com nome e idade.
      *
      * @param produto O produto.
      * @param sessao a sessao selecionada.
      */
-    public Carrinho(List<Estoque> produto, List<Sessao> sessao) {
+    public Carrinho(List<Produto> produto, List<Sessao> sessao) {
         this.produto = produto;
         this.sessao = sessao;
     }
-    
-    //Isso nao deve precisar usar, esse método esta em sessao
-    public void addSessaoAoCarrinho()
-    {
-        for(Sessao sessao : sessao)
-        {
-            System.out.println(sessao.getFilmes() +" "+ sessao.getSala() + "" + sessao.getHorario());
+
+    public Produto selecionarProduto() {
+        System.out.println("Produtos disponíveis: ");
+        estoque.listarProdutos();
+        System.out.println("\nInforme o produto que deseja assistir:");
+        String selecionaProduto = scanner.nextLine();
+
+        for (Produto produto : estoque.getProduto()) {
+            if (produto.getNome().equalsIgnoreCase(selecionaProduto)) {
+                System.out.println("Você selecionou: " + produto.getNome());
+                return produto;
+            }
         }
-        try(Scanner scanner = new Scanner(System.in))
-        {
-        System.out.println("Selecione a sessao desejada");
-        String filmeNome = scanner.nextLine();
-        System.out.println("Selecione a sessao desejada");
-        String horario = scanner.nextLine();
-        
+        System.out.println("Filme não encontrado.");
+
+        return null; // Retorna null se o produto nao for encontrado
+    }
+
+    public void selecionarQuantProduto() {
+
+        System.out.println("Informe a quantidade desejada desse produto");
+
+        String selecao = scanner.nextLine();
+        System.out.println("Você selecionou " + selecao);
 
     }
-    
-    }}
+}

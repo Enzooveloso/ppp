@@ -17,26 +17,37 @@ public class SystemCinema {
     public static void main(String[] args) 
     {
         
-        Duration duracaoDoFilme01 = Duration.ofMinutes(145);
-        Duration duracaoDoFilme02 = Duration.ofMinutes(75);
-        Duration duracaoDoFilme03 = Duration.ofMinutes(94);
-        Duration duracaoDoFilme04 = Duration.ofMinutes(115);
-        Duration duracaoDoFilme05 = Duration.ofMinutes(110);
-        
-         Filme filme0 = new Filme();
         GestaoDeFilmes gestaoDeFilmes = new GestaoDeFilmes();
-        
-        gestaoDeFilmes.cadastraFilme("Planeta dos Macacos, o reinado"," Acao", duracaoDoFilme01);
-        gestaoDeFilmes.cadastraFilme("Ursinho Pooh: Sangue e mel 2"," Terror", duracaoDoFilme02);
-        gestaoDeFilmes.cadastraFilme("Kung Fuu Panda 04"," Animacao", duracaoDoFilme03);
-        gestaoDeFilmes.cadastraFilme("Godzilla e Kong: O novo Império"," Aventura", duracaoDoFilme04);
-        gestaoDeFilmes.cadastraFilme("Guerra Civil"," acao", duracaoDoFilme05);
-        
-        
+        gestaoDeFilmes.cadastraFilme("Planeta dos Macacos, o reinado", "Ação", Duration.ofMinutes(145));
+        gestaoDeFilmes.cadastraFilme("Ursinho Pooh: Sangue e mel 2", "Terror", Duration.ofMinutes(75));
+        gestaoDeFilmes.cadastraFilme("Kung Fuu Panda 04", "Animação", Duration.ofMinutes(94));
+        gestaoDeFilmes.cadastraFilme("Godzilla e Kong: O novo Império", "Aventura", Duration.ofMinutes(115));
+        gestaoDeFilmes.cadastraFilme("Guerra Civil", "Ação", Duration.ofMinutes(110));
+
+        // Criação da sessão de cinema
         Sessao sessao = new Sessao();
+        sessao.setFilmes(gestaoDeFilmes.getFilmes()); // Configura filmes na sessão
+        sessao.inicializarSalas(); // Inicializa as salas com filmes
+        
+        
+        Estoque estoque = new Estoque();
+        estoque.cadastrarProduto("Pipoca", "01/01/2024");
+        estoque.cadastrarProduto("Chocolate", "05/01/2024");
+        estoque.cadastrarProduto("Refrigerante", "10/01/2024");
+        
+        Carrinho carrinho = new Carrinho(estoque);
+    
+        
+        Salas sala = new Salas();
+        
         sessao.selecionarFilme(gestaoDeFilmes);
-        sessao.selecionarQuantIngressos();
-        sessao.selecionarPoltronas(0, 0);
+        int ingressos = sessao.selecionarQuantIngressos();
+        
+        sessao.selecionarPoltronas(ingressos, 4);
+        
+        
+        
+        carrinho.selecionarQuantProduto();
         
         
     }

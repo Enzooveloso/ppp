@@ -30,7 +30,9 @@ public class Filme
      * duração do Filme.
      */
     private Duration duracao;
-
+    /*
+    private final Salas[] salas = new Salas[5];
+*/
     public String getTitulo() {
         return titulo;
     }

@@ -51,8 +51,7 @@ public class Salas {
      * Constrói um novo produto sem informação.
      *
      */
-    public Salas() {
-    }
+    public Salas() {}
 
     /**
      * Constrói uma nova sala apenas com o atributo sala.
@@ -69,21 +68,22 @@ public class Salas {
     public Salas(int sala, Filme filme) {
         this.sala = sala;
         this.filme = filme;
-        inicializarAssentos();
     }
 
     /**
      * Constrói uma nova sala com as informações sala e o filme.
      *
-     */
-    private void inicializarAssentos() {
+     
+    public void inicializarAssentos() {
         for (int i = 0; i < assentos.length; i++) {
             for (int j = 0; j < assentos[i].length; j++) {
                 assentos[i][j] = false; // Falso significa que o assento está disponível
             }
         }
     }
-
+    */
+    
+    
     /**
      * Tenta reservar um assento específico na sala.
      *

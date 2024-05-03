@@ -20,6 +20,14 @@ public class GestaoDeFilmes
      * Lista para criar diversos filmes.
      */
     private List<Filme> filmes = new ArrayList<>();
+    /*
+    private final Salas[] salas = new Salas[5];
+    
+     public Salas[] getSala() {
+        return salas;
+    }
+    */
+    private Salas sala;
     /**
      * Contrutor que filmes recebe um ArrayList.
      * @param filmes direciona a todos os atributos da classe Filme
@@ -27,6 +35,7 @@ public class GestaoDeFilmes
     public GestaoDeFilmes(List<Filme> filmes) 
     {
         this.filmes = new ArrayList<>();
+        
     }
     public GestaoDeFilmes(){}
     /**
@@ -35,9 +44,11 @@ public class GestaoDeFilmes
      * @param genero genero do filme.
      * @param duracao duracao do filme.
      */
-    public void cadastraFilme(String nome, String genero, Duration duracao)
+    public Filme cadastraFilme(String nome, String genero, Duration duracao)
     {
+        Filme novoFilme = new Filme(nome, genero, duracao);
         this.filmes.add(new Filme(nome,genero,duracao));
+        return novoFilme;
     }
     
     
